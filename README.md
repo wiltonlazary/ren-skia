@@ -1,8 +1,8 @@
 # ren-skia
 
-The Skia renderer for [ren-core](../../../ren-core/wtree/_repo_): a ren-core `Host`
+The Skia renderer for [ren-core](https://github.com/wiltonlazary/ren-core): a ren-core `Host`
 (`ren-core/host`) over CanvasKit. Its engine is
-[ren-canv](../../../ren-canv/wtree/_repo_)'s `Document`; this package
+[ren-canv](https://github.com/wiltonlazary/ren-canv)'s `Document`; this package
 measures text with the font file's own advances (ren-canv's `Sfnt`), draws
 it with CanvasKit fonts and replays the frames on a CanvasKit
 surface (`src/fonts.js`, `src/replay.js`, `src/index.js`). It keeps a retained scene of ren-core's portable
@@ -210,7 +210,7 @@ Measured with 1,000 bench/ui rows (38 high) on an 800×600 canvas, in node
 create 5,850, swap 340, scroll 2,250, update every 10th label 590, a
 keystroke 670, clear 690.
 
-Headless Chrome 154 ([`bench/skia/chrome.mjs`](../../../ren-bench/wtree/_repo_/bench/skia/chrome.mjs), 2 Chrome runs per
+Headless Chrome 154 ([`bench/skia/chrome.mjs`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/chrome.mjs), 2 Chrome runs per
 arm in ABBA order × 10 rounds after 3, load 5.6–6.9, software raster). The
 table gives main-thread ms from the operation to the end of present,
 CanvasKit's copy included, as min / median. Every row reaches the next
@@ -224,7 +224,7 @@ left is the engine's (ren-canv's layout and draw), which in node is about
 | update every 10th label | 5.6 / 7.8 | 4.2 / 7.1 |
 | a keystroke | 2.0 / 4.3 | 0.6 / 1.1 |
 
-In node on happy-dom ([`bench/skia/frames.jsx`](../../../ren-bench/wtree/_repo_/bench/skia/frames.jsx), 10 ABBA rounds, per frame,
+In node on happy-dom ([`bench/skia/frames.jsx`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/frames.jsx), 10 ABBA rounds, per frame,
 median µs, load 3–5):
 - Damage repaint against full: swap 290 against 1,742, update 191 against
   1,734, keystroke 504 against 1,718. Scroll, create and clear repaint whole
@@ -232,7 +232,7 @@ median µs, load 3–5):
 - The incremental mirror against a per-frame walk: swap 662 against 1,359,
   update 577 against 1,696, keystroke 648 against 1,853 µs.
 
-Deliberate choices, measured with [`bench/skia/frames.jsx`](../../../ren-bench/wtree/_repo_/bench/skia/frames.jsx):
+Deliberate choices, measured with [`bench/skia/frames.jsx`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/frames.jsx):
 
 - The painter stops visiting a container's children at the first one below
   the clip, because children are laid out top to bottom. Median painter time
@@ -291,16 +291,16 @@ bash -c 'ulimit -v 6000000; NODE_OPTIONS="--max-old-space-size=1024 --disable-wa
 
 ## Benchmarks
 
-The harnesses live in [ren-bench](../../../ren-bench/wtree/_repo_/README.md).
+The harnesses live in [ren-bench](https://github.com/wiltonlazary/ren-bench).
 Run benchmark commands from that checkout.
 
-[`bench/skia/frames.jsx`](../../../ren-bench/wtree/_repo_/bench/skia/frames.jsx) (node, no browser) and [`bench/skia/chrome.mjs`](../../../ren-bench/wtree/_repo_/bench/skia/chrome.mjs)
+[`bench/skia/frames.jsx`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/frames.jsx) (node, no browser) and [`bench/skia/chrome.mjs`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/chrome.mjs)
 (headless Chrome) measure the per-frame cost, damage repaint and the
 accessibility mirror (the numbers above). The Chrome page loads Taffy
 (`loadLayout('/taffy.wasm')`, served from ren-canv's taffy-layout) beside
 CanvasKit, and the driver watches it through the DevTools protocol: a page
 exception or console error fails the run at once with its message, and a
-keystroke that misses the Edit fails it too. [`bench/skia/busy.jsx`](../../../ren-bench/wtree/_repo_/bench/skia/busy.jsx) measures
+keystroke that misses the Edit fails it too. [`bench/skia/busy.jsx`](https://github.com/wiltonlazary/ren-bench/blob/main/bench/skia/busy.jsx) measures
 a busy screen (two columns of 24 rows on their own backgrounds, a tick and
 a hover beside their edge each frame): the columns' fills stay out of the
 damage, 4.4% of the canvas, and a frame takes 0.62 ms median at scale 1

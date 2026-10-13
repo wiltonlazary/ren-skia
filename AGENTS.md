@@ -2,11 +2,11 @@
 
 Standing rules for agents working in this checkout.
 
-Read the workspace layer first: `../../../AGENTS.md` and `../../../.ai/config/`
+Read the workspace layer first: [`../../../AGENTS.md`](https://github.com/wiltonlazary/rui/blob/main/AGENTS.md) and [`../../../.ai/config/`](https://github.com/wiltonlazary/rui/tree/main/.ai/config)
 (stability.md first, then javascript.md, design.md, benchmarks.md, concepts.md,
 resources.md, git.md).
 Then read [README.md](README.md), ren-core's README for the component layer and
-the Host contract (`../../../ren-core/wtree/_repo_/README.md`), and
+the Host contract ([`../../../ren-core/wtree/_repo_/README.md`](https://github.com/wiltonlazary/ren-core)), and
 [TODO.md](TODO.md) for open work.
 
 ## What this is
@@ -27,7 +27,7 @@ ren-dom is a devDependency, for the tests of Skia roots beside DOM roots.
   `build/<name>_<version>` and its own `artifact` link to it.
 - Build output: `build/_repo__0.1.0`, reached through the ignored `artifact`
   link: generated output and scratch (`artifact/tmp/<task>/`).
-- Benchmarks belong to [ren-bench](../../../ren-bench/wtree/_repo_/README.md);
+- Benchmarks belong to [ren-bench](https://github.com/wiltonlazary/ren-bench);
   their bundles, profiles and results are generated there.
 - `types/` is generated (`scripts/types.mjs`) and ignored.
 
