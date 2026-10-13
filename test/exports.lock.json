@@ -1,0 +1,25 @@
+{
+  ".": {
+    "$skia": "function",
+    "Change": "class",
+    "Frame": "class",
+    "Item": "class",
+    "Key": "class",
+    "Pointer": "class",
+    "Press": "class",
+    "Renderer": "class",
+    "Scrolled": "class",
+    "Theme": "class",
+    "attach": "function",
+    "commands": "object",
+    "decode": "function",
+    "hex": "function",
+    "loadLayout": "function",
+    "loadShaper": "function",
+    "operands": "object",
+    "remoteLayout": "function",
+    "render": "function"
+  },
+  "./font.ttf": "file",
+  "./mono.ttf": "file"
+}

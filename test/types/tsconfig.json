@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "strict": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "ren-core",
+    "lib": ["es2023", "dom", "esnext.disposable"],
+    "types": [],
+    "skipLibCheck": true
+  },
+  "include": ["*.ts", "*.tsx"]
+}
