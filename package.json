@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "description": "The Skia (CanvasKit) renderer for ren-core: ren-canv's engine (retained scene, layout, text, hit testing, damage repaint, native text entry, accessibility mirror) replayed on a CanvasKit surface.",
   "type": "module",
-  "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiltonlazary/ren-skia.git"
+  },
+  "homepage": "https://github.com/wiltonlazary/ren-skia#readme",
+  "bugs": {
+    "url": "https://github.com/wiltonlazary/ren-skia/issues"
+  },
   "sideEffects": false,
   "engines": {
     "node": ">=22.15"

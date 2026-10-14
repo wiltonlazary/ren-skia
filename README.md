@@ -13,8 +13,9 @@ focus itself, and in a document adds a native text entry and an
 accessibility mirror beside the canvas. Plain JavaScript with JSDoc types,
 strict `tsc` checking and generated declarations.
 
-The package is named `ren-skia`, and `package.json`
-is `private`. Its runtime dependencies are ren-canv and ren-core (linked from the
+The package is published on npm as `@maxenve/ren-skia` under the MIT license;
+install it under its import name: `npm install ren-skia@npm:@maxenve/ren-skia`.
+Its runtime dependencies are ren-canv and ren-core (linked from the
 sibling checkouts); `canvaskit-wasm` 0.40.0 is a peer
 the caller loads and passes in. The DejaVu Sans font ships in `assets/`
 (`ren-skia/font.ttf`, with its license), and DejaVu Sans Mono
