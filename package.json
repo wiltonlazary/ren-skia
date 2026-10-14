@@ -1,6 +1,6 @@
 {
   "name": "ren-skia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The Skia (CanvasKit) renderer for ren-core: ren-canv's engine (retained scene, layout, text, hit testing, damage repaint, native text entry, accessibility mirror) replayed on a CanvasKit surface.",
   "type": "module",
   "license": "MIT",
@@ -49,8 +49,8 @@
     "canvaskit-wasm": "0.40.0",
     "esbuild": "0.28.2",
     "happy-dom": "20.14.5",
-    "rrx-core": "file:../../../rrx-core/wtree/_repo_",
     "ren-dom": "file:../../../ren-dom/wtree/_repo_",
+    "rrx-core": "file:../../../rrx-core/wtree/_repo_",
     "typescript": "7.0.2"
   }
 }
