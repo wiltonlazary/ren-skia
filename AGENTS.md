@@ -25,7 +25,7 @@ ren-dom is a devDependency, for the tests of Skia roots beside DOM roots.
 - Checkout: `wtree/_repo_` (branch `main`); feature branches are sibling
   worktrees under `wtree/<name>`, each with its own build directory
   `build/<name>_<version>` and its own `artifact` link to it.
-- Build output: `build/_repo__0.1.2`, reached through the ignored `artifact`
+- Build output: `build/_repo__0.1.3`, reached through the ignored `artifact`
   link: generated output and scratch (`artifact/tmp/<task>/`).
 - Benchmarks belong to [ren-bench](https://github.com/wiltonlazary/ren-bench);
   their bundles, profiles and results are generated there.
