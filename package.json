@@ -1,6 +1,6 @@
 {
   "name": "ren-skia",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "The Skia (CanvasKit) renderer for ren-core: ren-canv's engine (retained scene, layout, text, hit testing, damage repaint, native text entry, accessibility mirror) replayed on a CanvasKit surface.",
   "type": "module",
   "license": "MIT",
