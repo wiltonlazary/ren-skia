@@ -1241,6 +1241,28 @@ describe('ren skia', () => {
     skia.close();
   });
 
+  it('shows the cursor through attach, on a move and after a frame under a still pointer', () => {
+    const skia = make();
+    const listeners = new Map();
+    const canvas = {
+      tabIndex: -1,
+      style: { cursor: '' },
+      addEventListener: (name, fn) => listeners.set(name, fn),
+      removeEventListener: name => listeners.delete(name),
+    };
+    const root = $root('app');
+    const tool = $signal(root, 'grab');
+    render(() => <View><View style={() => ({ height: 50, cursor: $read(tool) })} /></View>, skia, { root });
+    const detach = attach(skia, canvas);
+    listeners.get('pointermove')({ offsetX: 10, offsetY: 10 });
+    assert.equal(canvas.style.cursor, 'grab');
+    $write(tool, 'crosshair');
+    skia.present();
+    assert.equal(canvas.style.cursor, 'crosshair', 'a redraw shows the new cursor with no move');
+    detach();
+    skia.close();
+  });
+
   it('disposes every binding and scene node with the view', () => {
     const skia = make();
     const root = $root('app');
