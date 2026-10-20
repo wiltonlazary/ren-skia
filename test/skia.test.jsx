@@ -1263,6 +1263,39 @@ describe('ren skia', () => {
     skia.close();
   });
 
+  it("behaves as an application through attach by default: Ctrl+A and the browser's context menu stay away; as a page with behavior: 'page'", () => {
+    for (const behavior of /** @type {const} */ ([undefined, 'page'])) {
+      const skia = $skia(kit, { font, width: 200, height: 200, behavior });
+      const listeners = new Map();
+      /** @type {Map<string, string>} */
+      const props = new Map();
+      const canvas = {
+        tabIndex: -1,
+        style: { cursor: '', setProperty: (/** @type {string} */ name, /** @type {string} */ value) => void props.set(name, value), getPropertyValue: (/** @type {string} */ name) => props.get(name) ?? '', removeProperty: (/** @type {string} */ name) => void props.delete(name) },
+        addEventListener: (/** @type {string} */ name, /** @type {any} */ fn) => listeners.set(name, fn),
+        removeEventListener: (/** @type {string} */ name) => listeners.delete(name),
+      };
+      render(() => <View><Label text="loose text" /></View>, skia);
+      const detach = attach(skia, canvas);
+      const app = behavior === undefined;
+      let prevented = false;
+      const preventDefault = () => void (prevented = true);
+      listeners.get('keydown')({ key: 'a', shiftKey: false, ctrlKey: true, metaKey: false, altKey: false, preventDefault });
+      assert.equal(prevented, true, 'Ctrl+A: the app\'s nothing, or the page\'s text');
+      assert.equal(skia.copied(), app ? '' : 'loose text');
+      prevented = false;
+      listeners.get('contextmenu')({ offsetX: 10, offsetY: 10, preventDefault });
+      assert.equal(prevented, app, 'the context menu over text');
+      prevented = false;
+      listeners.get('contextmenu')({ offsetX: 150, offsetY: 150, preventDefault });
+      assert.equal(prevented, app, 'the context menu over nothing');
+      assert.equal(props.get('-webkit-touch-callout'), app ? 'none' : undefined);
+      detach();
+      assert.equal(props.size, 0);
+      skia.close();
+    }
+  });
+
   it('disposes every binding and scene node with the view', () => {
     const skia = make();
     const root = $root('app');
@@ -1287,7 +1320,8 @@ describe('ren skia', () => {
   });
 
   it('selects text with the pointer and paints the selection', () => {
-    const skia = make(300, 100);
+    // A page's: loose text selects.
+    const skia = $skia(kit, { font, width: 300, height: 100, behavior: 'page' });
     render(() => <View><Label text="select me please" /></View>, skia);
     skia.press(2, L / 2);
     skia.move(200, L / 2);

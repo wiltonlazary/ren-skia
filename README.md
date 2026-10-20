@@ -123,6 +123,7 @@ pass cannot lighten. The pass doubles the text's raster time: a whole
 | `canvas` | a canvas to draw into (browsers); an offscreen surface otherwise. An application root in a document makes one in its host element |
 | `image` | loads an `Image` source; `fetch` in browsers by default |
 | `aria` | the accessibility mirror `attach` keeps beside the canvas: `true` (default), `false`, or `'demand'` (once a user activates its hidden "Enable accessibility" button) |
+| `behavior` | how the page behaves under the user's hands, as ren-canv's: `'app'` (default: loose text not selectable; Ctrl or Cmd+A, the I-beam and the browser's context menu only in an Edit or a `select: 'text'` element; no touch callout), `'page'`, or `{ like, select, selectAll, textCursor, menu, editMenu, callout }` |
 
 `setTheme(tokens)` takes a new theme at once: every primitive resolves again, lays out and repaints; the view, focus, selection and state stay. The background follows the theme's canvas unless `background` was given.
 
