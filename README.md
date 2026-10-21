@@ -160,7 +160,9 @@ In a document it also adds two things beside the canvas.
   redo from the browser's Edit menu. An Edit's ref gives ren-core's
   `editOf` actions (`replace`, `undo`, `redo`, `selectAll`, its selection,
   kept while it has no focus), and the renderer its root's (`textAt`,
-  `selectText`, `selectedText`), for an application's own context menus.
+  `selectText`, `selectedText`), for an application's own context menus:
+  `textAt` finds a button's label too (`pressed`), and a press in a text
+  opened by `selectText` selects there, never pressing what holds it.
   Every press reaches ren-core's `$presses`, and a pointer event carries
   its `pointerType`.
 - **Accessibility mirror** (ren-canv's `src/aria.js`, the `aria` option). A

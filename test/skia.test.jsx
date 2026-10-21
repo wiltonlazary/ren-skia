@@ -1274,9 +1274,49 @@ describe('ren skia', () => {
     assert.equal(actions.value(), 'hi');
     const r = label.getBoundingClientRect();
     listeners.get('pointerdown')({ offsetX: r.x + 5, offsetY: r.y + r.height / 2, button: 2, pointerType: 'mouse', preventDefault() {} });
-    assert.deepEqual(found, [{ node: label, text: 'words' }]);
+    assert.deepEqual(found, [{ node: label, text: 'words', pressed: false }]);
     selectText(label);
     assert.equal(selectedText(label), 'words');
+    detach();
+    skia.close();
+  });
+
+  it("selects an opened text an Action holds through attach, pressing nothing until it ends", () => {
+    const skia = make();
+    const listeners = new Map();
+    const canvas = {
+      tabIndex: -1,
+      addEventListener: (name, fn) => listeners.set(name, fn),
+      removeEventListener: name => listeners.delete(name),
+    };
+    let label = null;
+    let presses = 0;
+    let hit = null;
+    render(() => (
+      <View onPointerDown={e => (hit = textAt(e))}>
+        <Action onPress={() => presses++} style={{ align: 'start' }}>
+          <Label ref={e => (label = e)} text="hello world" />
+        </Action>
+      </View>
+    ), skia);
+    const detach = attach(skia, canvas);
+    const r = label.getBoundingClientRect();
+    const y = r.y + r.height / 2;
+    const pointer = (name, x, button = 0) => listeners.get(name)({ offsetX: x, offsetY: y, button, pointerType: 'mouse', preventDefault() {} });
+    pointer('pointerdown', r.x + 1, 2);
+    assert.equal(hit?.node === label && hit.pressed, true, "an Action's label, pressed");
+    selectText(label);
+    pointer('pointerdown', r.x + 1);
+    pointer('pointermove', r.x + r.width / 2);
+    pointer('pointerup', r.x + r.width / 2);
+    const part = selectedText(label);
+    assert.ok(part.length > 0 && part.length < 11 && 'hello world'.startsWith(part), `a part is selected (${part})`);
+    assert.equal(presses, 0, 'the Action is not pressed');
+    assert.equal(skia.pressed === null && skia.current === null, true, 'nor in its press state or focused');
+    listeners.get('keydown')({ key: 'Escape', shiftKey: false, ctrlKey: false, metaKey: false, altKey: false, preventDefault() {} });
+    pointer('pointerdown', r.x + 1);
+    pointer('pointerup', r.x + 1);
+    assert.equal(presses, 1, 'after Escape it presses again');
     detach();
     skia.close();
   });
