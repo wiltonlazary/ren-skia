@@ -154,6 +154,15 @@ In a document it also adds two things beside the canvas.
   selections: Shift with an arrow, Home or End extends one, typing replaces
   it, and Backspace and Delete remove it. Surrogate pairs count as one
   character.
+- **Undo and text actions** (ren-canv's, §Text actions there). Each Edit
+  keeps its own undo history (typing grouped by word): Ctrl or Cmd+Z, Ctrl
+  or Cmd+Shift+Z and Ctrl+Y walk it, and so does the textarea's undo and
+  redo from the browser's Edit menu. An Edit's ref gives ren-core's
+  `editOf` actions (`replace`, `undo`, `redo`, `selectAll`, its selection,
+  kept while it has no focus), and the renderer its root's (`textAt`,
+  `selectText`, `selectedText`), for an application's own context menus.
+  Every press reaches ren-core's `$presses`, and a pointer event carries
+  its `pointerType`.
 - **Accessibility mirror** (ren-canv's `src/aria.js`, the `aria` option). A
   visually hidden DOM tree of the scene: a div per container, a `p` per
   Label, a button per Action (activating it presses the Action), a textbox

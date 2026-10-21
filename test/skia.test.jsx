@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { Window as HappyWindow } from 'happy-dom';
 import { $root, $signal, $read, $write, $flush, $stats, $batch } from 'rrx-core';
-import { Show, For, Portal, View, Layout, Scroll, Label, Edit, Action, Shape, Image } from 'ren-core';
+import { Show, For, Portal, View, Layout, Scroll, Label, Edit, Action, Shape, Image, editOf, textAt, selectText, selectedText } from 'ren-core';
 import { $skia, render, attach, decode, loadLayout, remoteLayout } from 'ren-skia';
 import { serveLayout } from 'ren-canv/worker';
 import { closeAfter } from './fixtures/after.js';
@@ -1238,6 +1238,46 @@ describe('ren skia', () => {
     assert.equal(canvas.tabIndex, 0);
     detach();
     assert.equal(listeners.size, 0);
+    skia.close();
+  });
+
+  it("gives an Edit's actions and the root's text actions, and undoes typing with Ctrl+Z through attach", () => {
+    const skia = make();
+    const listeners = new Map();
+    const canvas = {
+      tabIndex: -1,
+      addEventListener: (name, fn) => listeners.set(name, fn),
+      removeEventListener: name => listeners.delete(name),
+    };
+    let edit = null;
+    let label = null;
+    const found = [];
+    render(() => (
+      <View onPointerDown={e => found.push(textAt(e))}>
+        <Label ref={e => (label = e)} text="words" />
+        <Edit ref={e => (edit = e)} value="" />
+      </View>
+    ), skia);
+    const detach = attach(skia, canvas);
+    const actions = editOf(edit);
+    assert.ok(actions !== null, 'an Edit has its actions');
+    edit.focus();
+    let prevented = 0;
+    const key = (k, mods = {}) => listeners.get('keydown')({ key: k, shiftKey: false, ctrlKey: false, metaKey: false, altKey: false, ...mods, preventDefault: () => prevented++ });
+    key('h');
+    key('i');
+    assert.equal(actions.value(), 'hi');
+    key('z', { ctrlKey: true });
+    assert.equal(prevented, 3, 'the undo is the renderer\'s');
+    assert.equal(actions.value(), '');
+    assert.equal(actions.redo(), true);
+    assert.equal(actions.value(), 'hi');
+    const r = label.getBoundingClientRect();
+    listeners.get('pointerdown')({ offsetX: r.x + 5, offsetY: r.y + r.height / 2, button: 2, pointerType: 'mouse', preventDefault() {} });
+    assert.deepEqual(found, [{ node: label, text: 'words' }]);
+    selectText(label);
+    assert.equal(selectedText(label), 'words');
+    detach();
     skia.close();
   });
 
