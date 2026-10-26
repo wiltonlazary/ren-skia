@@ -325,7 +325,7 @@ v24.15.0, CanvasKit 0.40.0, 400 frames, 4 ABBA runs an arm, load 4.4-5.6).
 cd ../../../ren-bench/wtree/_repo_
 node --import ren-core/loader bench/skia/frames.jsx [--suite aria|damage] [--rounds 10] [--warmup 3]
 node --import ren-core/loader bench/skia/busy.jsx [--frames 400] [--warmup 50] [--scale 1]
-flock "$HOME/.cache/chrome-bench.lock" node bench/skia/chrome.mjs [--suite aria|damage]
+flock -w 1800 "$HOME/.cache/chrome-bench.lock" node bench/skia/chrome.mjs [--suite aria|damage]
 ```
 
 ren-bench's `bench/ui` (worker mode against direct mode, disposal under input)
